@@ -9,9 +9,14 @@ class Rectangle:
         Initialze the rectangle class with width and
         height fields
     """
+    number_of_instances = 0
+    print_symbol = '#'
+
     def __init__(self, width=0, height=0):
         self.__width = width
         self.__height = height
+        type(self).number_of_instances += 1
+        # self.print_symbol = '#'
 
     @property
     def width(self):
@@ -72,7 +77,7 @@ class Rectangle:
             return my_print
         for i in range(self.__height):
             for j in range(self.__width):
-                my_print += '#'
+                my_print += str(self.print_symbol)
             if i < self.__height - 1:
                 my_print += '\n'
         return my_print
@@ -88,3 +93,20 @@ class Rectangle:
             Modify the special method __del__
         """
         print("Bye rectangle...")
+        type(self).number_of_instances -= 1
+
+    @staticmethod
+    def bigger_or_equal(rect_1, rect_2):
+        """
+            method to return the bigger of 2 rectangles
+        """
+        if not isinstance(rect_1, Rectangle):
+            raise TypeError("rect_1 must be an instance of Rectangle")
+
+        if not isinstance(rect_2, Rectangle):
+            raise TypeError("rect_2 must be an instance of Rectangle")
+
+        if rect_1.area() >= rect_2.area():
+            return rect_1
+        else:
+            return rect_2
